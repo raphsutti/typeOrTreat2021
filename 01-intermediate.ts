@@ -15,14 +15,14 @@ const findOldCostume = () => {
     return { jumpSuit, estimate }
 }
 
-const createNewMask = (costume: any) => {
+const createNewMask = (costume: ReturnType<typeof findOldCostume>) => {
     const mask = printer.printMask()
     mask.shape = "circle"
     costume.estimate += 60
     return { ...costume, mask }
 }
 
-const createBodyCamera = (costume: any) => {
+const createBodyCamera = (costume: ReturnType<typeof findOldCostume>) => {
     const camera = printer.printCamera()
     // It will need painting too
     costume.estimate += 45
@@ -48,7 +48,10 @@ const costume = assembleCostume()
 
 // You'll know it worked when this line raises an error
 console.log(`It should take about ${costume.time} minutes`)
+// ^ Property 'time' does not exist on type '{ camera: Camera; jumpSuit: Jumpsuit; estimate: number; }'.
 
 // Now that we've got a working pipeline, can you generate a type
 // which represents the end-state of assembleCostume so that others
 // can re-use it later?
+
+type AssembledCostume = ReturnType<typeof assembleCostume>

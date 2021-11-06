@@ -2,7 +2,7 @@
 // just "generic" bowls. You can put anything in them, and get anything
 // back out of them. 
 
-function getBowl(items: any) {
+function getBowl<T>(items: T) {
     return { items }
 }
 
@@ -53,7 +53,7 @@ candiedApplesBowl.items.type[0]
 // just "generic" bowls. You grab a few fancy branded :tm: bowls and
 // fill the bowls with their candy.
 
-function fillBowl<T>(candy: T) {
+function fillBowl<T extends string>(candy: T) {
     return { candy }
 }
 

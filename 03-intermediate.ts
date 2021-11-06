@@ -7,8 +7,12 @@
 // isn't keeping the type is loosing the string literal when it comes in - 
 // can you make it pass by changing the definition of `makeTitle`?
 
-function makeTitle(str: string) {
-    return "<spooky>" + str.toUpperCase() + "</spooky>"
+interface String {
+    toUpperCase<T extends string>(this: T) : Uppercase<T>
+}
+
+function makeTitle<Str extends string>(str: Str): `<spooky>${Uppercase<Str>}</spooky>` {
+    return `<spooky>${str.toUpperCase()}</spooky>`
 }
 
 const requiresTadaEmoji = (str: string) => { return str === "<spooky>PARTY</spooky>"}
@@ -31,12 +35,12 @@ const setupHeader = () => {
 // information. You convert this into a footer but find yourself
 // losing type information when you use this function: 
 
-function setupFooter(str: string) {
+function setupFooter<Name extends string, Date extends string, Address extends string>(str: `${Name},${Date},${Address}`) {
     // validate string etc
     return { 
-        name: str.split(",")[0],
-        date: str.split(",")[1],
-        address: str.split(",")[2]
+        name: str.split(",")[0] as Name,
+        date: str.split(",")[1] as Date,
+        address: str.split(",")[2] as Address
     }
 }
 
@@ -44,9 +48,9 @@ function setupFooter(str: string) {
 
 const footer = setupFooter("Danger McShane,Halloween 2021,The Internet")
 footer.name
-//      ^?
+//      ^Danger McShane
 footer.date
-//      ^?
+//      ^Halloween 2021
 footer.address
-//      ^?
+//      ^The Internet
 

@@ -18,9 +18,9 @@ const pumpkins = [
 
 // Can you extract the types for three different categories of these pumpkins?
 
-type UnderripePumpkin = {}
-type RipePumpkin = {}
-type OverripePumpkin = {}
+type UnderripePumpkin = { color: "green", soundWhenHit: "dull thud"}
+type RipePumpkin = { color: "purple" | "orange" | "blue" , soundWhenHit: "echo-y"}
+type OverripePumpkin = { color: "white", soundWhenHit: "squishy"}
 
 // We'll use a type union to say that a pumpkin can be any of these possible types
 
@@ -30,11 +30,11 @@ type Pumpkin =  UnderripePumpkin | RipePumpkin | OverripePumpkin
 // This code works at runtime, but TypeScript doesn't seem to understand that `pumpkinsForPie`
 // is only RipePumpkin's now. Can you think of a way to change the `isRipe` to "guard" the "type"?
 
-function isRipe(pumpkin: any) {
+function isRipe(pumpkin: any): pumpkin is RipePumpkin {
     return "soundWhenHit" in pumpkin && pumpkin.soundWhenHit === "echo-y"
 }
 
 const pumpkinsForPie = pumpkins.filter(isRipe)
-//    ^?
+//    const pumpkinsForPie: RipePumpkin[]
 const soup = cookPumpkinSoup(pumpkinsForPie)
-//    ^?
+//    const soup: ThaiPumpkinSoup

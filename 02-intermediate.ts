@@ -13,8 +13,27 @@ type Punch = {
 // We've mapped out what will happen at your party, can you write a class
 // which works with all the below code? 
 
-class PunchMixer {
-    // Your code here
+class PunchMixer<MixerType> {
+    #punch: Punch = {flavour: '', ingredients: []};
+    mixer!: MixerType;
+
+    public get punch(): Punch {
+        return this.#punch;
+    }
+
+    public set punch(punch: Punch | Punch['ingredients'][number]) {
+        if (typeof punch === 'string') {
+            this.#punch.ingredients.push(punch);
+        } else if ('flavour' in punch) {
+            this.#punch = punch;
+        } else {
+            this.#punch.ingredients.push(punch);
+        }
+    }
+
+    public vend(): MixerType {
+        return this.mixer;
+    }
 }
 
 // (if you want to try this without classes, you can drop the new below,
@@ -57,10 +76,6 @@ function partyStarts() {
 partyStarts()
 
 
-
-
-/**
-
 // Congrats, that worked out well (we hope!) so you'd like
 // to scale your operation to handle many mixers in the party. 
 // To do that you'd like to make the class generically available
@@ -88,5 +103,3 @@ function partiesAtAnyScale() {
   //    ^?
   cup.color
 }
-
- */

@@ -49,7 +49,7 @@ handleSale({
 // don't feel like you need to jump to a perfect answer yet.
 
 function handleSale(events: {
-  [Book in keyof IncomingBookMap]?: (e: Books) => void;
+  [Book in Books as `on${Book["genre"]}`]?: (e: Book) => void;
 }) {
   // We're ignoring the implementation details for this function.
   // Meaning, the only possible work you need to do is in the `events` param above.
